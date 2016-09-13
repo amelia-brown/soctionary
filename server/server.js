@@ -1,4 +1,4 @@
-var express = require('express');  
+var express = require('express');
 var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
@@ -10,45 +10,13 @@ app.use(express.static('public'));
 app.use('/static', express.static(__dirname + '/../public'));
 app.use('/static', express.static(__dirname + '/../public/node_modules/fabric/dist'));
 
-var animals = [
-  'penguin',
-  'turtle',
-  'butterfly',
-  'dragonfly',
-  'frog',
-  'monkey',
-  'shark',
-  'fish',
-  'bird',
-  'elephant',
-  'dolphin',
-  'dog',
-  'horse',
-  'bunny',
-  'snail',
-  'mouse',
-  'seal',
-  'pig',
-  'cow',
-  'turkey',
-  'camel',
-  'cat',
-  'rhino',
-  'bear',
-  'spider',
-  'ant',
-  'caterpillar',
-  'porcupine',
-  'anteater'
-];
-
 var clients = {};
 var rounds = 0;
 var queried = false;
 var images;
 
 io.on('connection', function(socket) {
-  
+
   socket.on('name', function (name) {
     socket.name = name;
     clients[name] = 0;
@@ -64,15 +32,15 @@ io.on('connection', function(socket) {
       }, 5000);
     }, 4000);
   });
-  
+
   socket.on('image', function (data) {
-    
+
     drawingController.addDrawing({
       playerName: socket.name,
       roundId: rounds,
       vectorDrawing: data
     });
-    
+
     setTimeout(function () {
       if (!queried) {
         drawingController.retrieveRoundsDrawings(rounds, function (data) {
@@ -90,17 +58,17 @@ io.on('connection', function(socket) {
         });
         queried = true;
       }
-      
+
     }, 4000);
-     
+
   });
-      
+
   socket.on('vote', function (name) {
     drawingController.updateVoteCount(rounds, name, function() {
       drawingController.retrieveRoundsDrawings(rounds, function (data) {
         images = data;
         console.log('images', images);
-        
+
         setTimeout(function () {
           socket.emit('results', {
             images: images,
@@ -111,9 +79,9 @@ io.on('connection', function(socket) {
         }, 1000);
 
       });
-      
+
     });
-    
+
   });
 
   socket.on('again', function () {
@@ -132,5 +100,4 @@ io.on('connection', function(socket) {
 
 http.listen(port, function(data) {
   console.log('listening on ' + port);
-
 });

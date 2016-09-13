@@ -6,7 +6,6 @@ var Board = () => (
 		<canvas id="canvas" width="375" height="375"></canvas>
 		</div>
 	)
- 
 
 export default class Drawing extends React.Component {
 	constructor(props) {
@@ -50,16 +49,15 @@ export default class Drawing extends React.Component {
 		  image = JSON.stringify(canvas);
 		  canvas.clear();
 		  //send image to server
-		  socket.emit('image', image); 
+		  socket.emit('image', image);
 		  //You may see a lot of these.  These are used to prevent the listener from firing off multiple times from persisting emitters.
 		  //If you want to see what actually happens, comment out the removeListeners and play the game more than once.
 		  socket.removeListener('end');
-		  window.location.href = '#/vote' 			  	
+		  window.location.href = '#/vote'
 		}.bind(this));
 
 		// start the countdown
 		// this.countDown();
-		
 	}
 
 	componentDidMount() {

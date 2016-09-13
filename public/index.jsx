@@ -11,8 +11,6 @@ import Drawing from './views/drawing.jsx'
 import Result from './views/result.jsx'
 import Vote from './views/vote.jsx'
 
-
- 
 render((
   <Router history={hashHistory}>
     <Route path="/" component={Name}/>
