@@ -2,14 +2,14 @@ import React from 'react'
 
 
 //Simple ready view
-export default class ready extends React.Component {
+export default class CreateRoom extends React.Component {
 	constructor(props) {
 		super(props)
 	}
 
 	componentWillMount() {
-		socket.on('countdown',function (animalName) {
-			window.Animal = animalName;
+		socket.on('enterRoom', function() {
+		//	window.Animal = animalName;
 			window.location.href = '#/drawing'
 		  //redirect to countdown view
 		});
@@ -26,4 +26,4 @@ export default class ready extends React.Component {
 			<button className="btn waves-effect waves-light" value="Press this button when everyone is in" onClick={this.start}>Press this button when everyone is ready</button>
 		</div>
 	)}
-	}
+}
